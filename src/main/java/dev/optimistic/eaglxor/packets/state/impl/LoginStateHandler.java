@@ -41,6 +41,7 @@ public final class LoginStateHandler implements StateHandler {
     this.sentLoginStart = true;
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public void handleServerboundLoginFinishPacket(
     ChannelHandlerContext ctx,
