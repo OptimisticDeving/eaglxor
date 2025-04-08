@@ -12,8 +12,9 @@ public final class PipelineUtil {
 
   }
 
-  public static void complete(ChannelHandlerContext ctx) {
+  public static void finish(ChannelHandlerContext ctx) {
     ctx.pipeline().remove(EaglerPacketCodec.class);
+    ctx.pipeline().remove(EaglerHandlerCaller.class);
   }
 
   public static <T> void forwardToBeforeHandler(

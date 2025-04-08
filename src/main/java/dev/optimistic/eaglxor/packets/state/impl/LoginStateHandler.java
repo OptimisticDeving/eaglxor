@@ -53,7 +53,7 @@ public final class LoginStateHandler implements StateHandler {
     ctx.writeAndFlush(ClientboundLoginFinishPacket.INSTANCE)
       .syncUninterruptibly();
 
-    PipelineUtil.complete(ctx);
+    PipelineUtil.finish(ctx);
 
     final int protocolVersion = EaglerAttrs.GAME_VERSION.getValue(ctx);
     PipelineUtil.forwardToVia(
