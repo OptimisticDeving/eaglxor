@@ -111,7 +111,6 @@ public enum PacketRegistry implements StreamCodec<ByteBuf, EaglerPacket> {
       .dispatch(
         packet -> classToId.get(packet.getClass()),
         id -> {
-          System.out.println("Receiving packet id " + id);
           final var codec = idToCodec.get(id);
           if (codec == null)
             throw new DecoderException("Unrecognized packet " + id);

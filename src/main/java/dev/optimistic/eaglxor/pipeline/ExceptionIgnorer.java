@@ -21,10 +21,7 @@ public final class ExceptionIgnorer extends ChannelInboundHandlerAdapter {
       cause instanceof CancelEncoderException
         || cause instanceof CancelDecoderException
         || cause instanceof CancelException
-    ) {
-      System.out.print("Caught cancel exception");
-      return;
-    }
+    ) return;
 
     super.exceptionCaught(ctx, cause);
   }

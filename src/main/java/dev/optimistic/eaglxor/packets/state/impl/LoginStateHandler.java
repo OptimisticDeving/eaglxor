@@ -28,7 +28,6 @@ public final class LoginStateHandler implements StateHandler {
     ChannelHandlerContext ctx,
     ServerboundLoginStartPacket packet
   ) {
-    System.out.println(packet);
     if (this.handledLoginStart)
       throw new IllegalStateException("Duplicate login start");
 
