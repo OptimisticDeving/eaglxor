@@ -1,0 +1,2 @@
+bind-port: 42069
+accept-path: /socket

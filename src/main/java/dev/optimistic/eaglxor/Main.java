@@ -27,12 +27,17 @@ import java.util.function.Supplier;
 public final class Main extends JavaPlugin {
   public static final Supplier<Main> INSTANCE_SUPPLIER = Suppliers
     .memoize(() -> JavaPlugin.getPlugin(Main.class));
+  private static final String ACCEPT_PATH_KEY = "accept-path";
   private ChannelInitializer<Channel> vanillaChannelInitializer;
   private MethodHandle initChannelHandle;
+  private String acceptPath;
 
   @SuppressWarnings("unchecked")
   @Override
   public void onLoad() {
+    this.getConfig().options().copyDefaults(true);
+    this.saveConfig();
+
     try {
       final Class<?> serverConnectionListenerChannelHandlerClass =
         Class.forName("net.minecraft.server.network" +
@@ -78,12 +83,21 @@ public final class Main extends JavaPlugin {
 
     final Initializer initializer = new Initializer();
 
+    this.acceptPath = getConfig().getString(ACCEPT_PATH_KEY);
+    if (this.acceptPath == null)
+      throw new IllegalStateException(ACCEPT_PATH_KEY + " must be non-null");
+    if (!this.acceptPath.startsWith("/")) {
+      this.acceptPath = "/" + this.acceptPath;
+      getConfig().set(ACCEPT_PATH_KEY, this.acceptPath);
+      saveConfig();
+    }
+
     new ServerBootstrap()
       .group(eventLoopGroup)
       .channel(serverChannel)
       .handler(new LoggingHandler(LogLevel.INFO))
       .childHandler(initializer)
-      .bind(42069);
+      .bind(getConfig().getInt("bind-port", 42069));
   }
 
   private final class Initializer
@@ -105,7 +119,11 @@ public final class Main extends JavaPlugin {
       ch.pipeline().addFirst(EaglerHandlerCaller.INSTANCE);
       ch.pipeline().addFirst(new EaglerPacketCodec());
       ch.pipeline().addFirst(SimpleWebsocketCodec.INSTANCE);
-      ch.pipeline().addFirst(new WebSocketServerProtocolHandler("/socket"));
+      ch.pipeline().addFirst(
+        new WebSocketServerProtocolHandler(
+          acceptPath
+        )
+      );
       ch.pipeline().addFirst(ExceptionIgnorer.INSTANCE);
       ch.pipeline().addFirst(new HttpObjectAggregator(65535));
       ch.pipeline().addFirst(new HttpServerCodec());
