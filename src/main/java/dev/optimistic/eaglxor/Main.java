@@ -105,13 +105,9 @@ public final class Main extends JavaPlugin {
       ch.pipeline().addFirst(EaglerHandlerCaller.INSTANCE);
       ch.pipeline().addFirst(new EaglerPacketCodec());
       ch.pipeline().addFirst(SimpleWebsocketCodec.INSTANCE);
-      ch.pipeline().addFirst(
-        new WebSocketServerProtocolHandler("/socket")
-      );
+      ch.pipeline().addFirst(new WebSocketServerProtocolHandler("/socket"));
       ch.pipeline().addFirst(ExceptionIgnorer.INSTANCE);
-      ch.pipeline().addFirst(
-        new HttpObjectAggregator(2097151)
-      );
+      ch.pipeline().addFirst(new HttpObjectAggregator(65535));
       ch.pipeline().addFirst(new HttpServerCodec());
       ch.pipeline().replace(
         "prepender",
