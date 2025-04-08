@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 public enum ProtocolVersion {
   PENDING(-1),
   FUTURE(-127),
-  /// Used in 1.5.2
+  /// Used only in 1.5.2
   V1(
     1,
     Suppliers.memoize(() -> ServerboundHandshakePacketV1.STREAM_CODEC)

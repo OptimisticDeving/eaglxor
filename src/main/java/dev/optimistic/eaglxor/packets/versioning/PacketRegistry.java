@@ -123,7 +123,6 @@ public enum PacketRegistry implements StreamCodec<ByteBuf, EaglerPacket> {
     this(null, registrations);
   }
 
-  // Needed to avoid cylic initialization
   public static PacketRegistry getPacketRegistry(
     ProtocolVersion protocolVersion
   ) {
