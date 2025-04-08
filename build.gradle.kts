@@ -29,11 +29,11 @@ configurations {
 dependencies {
   paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
 
-  compileOnly("com.viaversion:viaversion-api:5.3.1")
-  compileOnly("com.viaversion:viaversion-bukkit:5.3.1")
-  compileOnly("com.viaversion:viabackwards:5.3.1")
+  compileOnly(libs.viaversion.api)
+  compileOnly(libs.viaversion.bukkit)
+  compileOnly(libs.viabackwards)
 
-  bundle("io.netty:netty-codec-http:4.1.115.Final")
+  bundle(libs.netty.codec.http)
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
