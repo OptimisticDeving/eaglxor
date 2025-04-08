@@ -5,7 +5,6 @@ plugins {
   id("xyz.jpenilla.resource-factory-bukkit-convention") version "1.2.0"
   id("io.papermc.paperweight.userdev") version "2.0.0-beta.14"
   id("xyz.jpenilla.run-paper") version "2.3.1"
-  id("io.freefair.lombok") version "8.13.1"
 }
 
 group = "dev.optimistic"
@@ -30,13 +29,9 @@ configurations {
 dependencies {
   paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
 
-  compileOnly("com.viaversion:viaversion:5.3.1")
   compileOnly("com.viaversion:viaversion-api:5.3.1")
   compileOnly("com.viaversion:viaversion-bukkit:5.3.1")
   compileOnly("com.viaversion:viabackwards:5.3.1")
-  compileOnly("com.viaversion:viarewind-common:4.0.7")
-  /*compileOnly("com.viaversion:viaversion:5.0.0")
-  compileOnly("com.viaversion:viaversion-bukkit:5.0.0")*/
 
   downloadAtRuntime("io.netty:netty-codec-http:4.1.115.Final")
 }

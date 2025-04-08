@@ -5,14 +5,10 @@ import dev.optimistic.eaglxor.packets.serverbound.handshake.ServerboundHandshake
 import dev.optimistic.eaglxor.packets.serverbound.handshake.ServerboundHandshakePacketV1;
 import dev.optimistic.eaglxor.packets.serverbound.handshake.ServerboundHandshakePacketV2;
 import io.netty.buffer.ByteBuf;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import net.minecraft.network.codec.StreamCodec;
 
 import java.util.function.Supplier;
 
-@RequiredArgsConstructor
-@Getter
 public enum ProtocolVersion {
   PENDING(-1),
   FUTURE(-127),
@@ -38,9 +34,17 @@ public enum ProtocolVersion {
       ProtocolVersion::fromNum
     );
 
-  @Getter
+
   private final int num;
   private final Supplier<StreamCodec<ByteBuf, ? extends ServerboundHandshakePacket>> brandPacketCodec;
+
+  ProtocolVersion(
+    int num,
+    Supplier<StreamCodec<ByteBuf, ? extends ServerboundHandshakePacket>> brandPacketCodec
+  ) {
+    this.num = num;
+    this.brandPacketCodec = brandPacketCodec;
+  }
 
   ProtocolVersion(int num) {
     this(
@@ -57,6 +61,10 @@ public enum ProtocolVersion {
       case 4 -> ProtocolVersion.V4;
       default -> ProtocolVersion.FUTURE;
     };
+  }
+
+  public int getNum() {
+    return this.num;
   }
 
   public StreamCodec<ByteBuf, ? extends ServerboundHandshakePacket> getBrandPacketCodec() {
