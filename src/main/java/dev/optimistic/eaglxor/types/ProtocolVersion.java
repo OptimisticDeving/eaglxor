@@ -66,8 +66,4 @@ public enum ProtocolVersion {
   public int serializableLegacyVersion() {
     return this == ProtocolVersion.V1 ? 1 : 2;
   }
-
-  public boolean isLegacyVersion() {
-    return this == ProtocolVersion.V1;
-  }
 }

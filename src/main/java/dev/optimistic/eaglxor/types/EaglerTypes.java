@@ -32,14 +32,6 @@ public final class EaglerTypes {
       },
       ByteBuf::readUnsignedShort
     );
-  public static final StreamCodec<ByteBuf, ByteBuf> PASSTHROUGH =
-    StreamCodec.of(
-      ByteBuf::writeBytes,
-      input -> {
-        input.retain();
-        return input;
-      }
-    );
   public static final StreamCodec<ByteBuf, ByteBuf>
     DEFAULT_BYTE_PREFIXED_BYTES = bytePrefixedByteArrayCodec(255);
   public static final StreamCodec<ByteBuf, ByteBuf>
@@ -113,10 +105,6 @@ public final class EaglerTypes {
       },
       input -> null
     );
-  }
-
-  public static StreamCodec<ByteBuf, List<Integer>> shortArrayCodec(int limit) {
-    return unsignedShortPrefixedArrayCodec(UNSIGNED_SHORT_CODEC, limit);
   }
 
   public static <T> StreamCodec<ByteBuf, T> constant(

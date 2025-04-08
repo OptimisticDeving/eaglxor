@@ -16,7 +16,8 @@ public final class ExceptionIgnorer extends ChannelInboundHandlerAdapter {
   }
 
   @Override
-  public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+  public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
+    throws Exception {
     if (
       cause instanceof CancelEncoderException
         || cause instanceof CancelDecoderException

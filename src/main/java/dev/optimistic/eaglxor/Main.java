@@ -88,10 +88,8 @@ public final class Main extends JavaPlugin {
 
   private final class Initializer
     extends ChannelInitializer<SocketChannel> {
-    private static final String NAME = "eaglxor-codec";
-
     @Override
-    protected void initChannel(SocketChannel ch) throws Exception {
+    protected void initChannel(SocketChannel ch) {
       try {
         initChannelHandle.invoke(
           vanillaChannelInitializer,
