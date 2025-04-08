@@ -147,6 +147,7 @@ public final class Main extends JavaPlugin {
         "success-skipper",
         LoginSuccessSkipper.INSTANCE
       );
+      ch.pipeline().addLast(CompressionRemover.INSTANCE);
     }
   }
 }
