@@ -4,7 +4,10 @@ import com.google.common.base.Suppliers;
 import com.viaversion.viaversion.api.Via;
 import dev.optimistic.eaglxor.pipeline.*;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.ServerChannel;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollServerSocketChannel;
@@ -132,12 +135,12 @@ public final class Main extends JavaPlugin {
       ch.pipeline().replace(
         HandlerNames.PREPENDER,
         HandlerNames.PREPENDER,
-        new ChannelOutboundHandlerAdapter()
+        Stubs.OUTBOUND_STUB
       );
       ch.pipeline().replace(
         HandlerNames.SPLITTER,
         HandlerNames.SPLITTER,
-        new ChannelInboundHandlerAdapter()
+        Stubs.INBOUND_STUB
       );
       ch.pipeline().addAfter(
         Via.getManager().getInjector().getEncoderName(),
