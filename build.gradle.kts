@@ -16,13 +16,13 @@ repositories {
   maven("https://repo.viaversion.com/")
 }
 
-val downloadAtRuntime by configurations.creating {
+val bundle by configurations.creating {
   isTransitive = false
 }
 
 configurations {
   compileClasspath {
-    extendsFrom(downloadAtRuntime)
+    extendsFrom(bundle)
   }
 }
 
@@ -33,7 +33,7 @@ dependencies {
   compileOnly("com.viaversion:viaversion-bukkit:5.3.1")
   compileOnly("com.viaversion:viabackwards:5.3.1")
 
-  downloadAtRuntime("io.netty:netty-codec-http:4.1.115.Final")
+  bundle("io.netty:netty-codec-http:4.1.115.Final")
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -52,7 +52,11 @@ tasks {
   }
 
   processResources {
+    dependsOn(bundle)
+
     from("LICENSE")
+
+    bundle.forEach { from(zipTree(it)) }
   }
 }
 
@@ -64,8 +68,4 @@ bukkitPluginYaml {
 
   main = "dev.optimistic.eaglxor.Main"
   apiVersion = "1.21"
-
-  downloadAtRuntime.allDependencies.forEach {
-    libraries.add(it.toString())
-  }
 }
