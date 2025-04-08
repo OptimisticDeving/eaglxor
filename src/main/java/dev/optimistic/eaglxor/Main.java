@@ -1,6 +1,7 @@
 package dev.optimistic.eaglxor;
 
 import com.google.common.base.Suppliers;
+import com.viaversion.viaversion.api.Via;
 import dev.optimistic.eaglxor.pipeline.*;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -15,6 +16,7 @@ import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import net.minecraft.network.HandlerNames;
 import net.minecraft.server.network.ServerConnectionListener;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -128,17 +130,17 @@ public final class Main extends JavaPlugin {
       ch.pipeline().addFirst(new HttpObjectAggregator(65535));
       ch.pipeline().addFirst(new HttpServerCodec());
       ch.pipeline().replace(
-        "prepender",
-        "prepender",
+        HandlerNames.PREPENDER,
+        HandlerNames.PREPENDER,
         new ChannelOutboundHandlerAdapter()
       );
       ch.pipeline().replace(
-        "splitter",
-        "splitter",
+        HandlerNames.SPLITTER,
+        HandlerNames.SPLITTER,
         new ChannelInboundHandlerAdapter()
       );
       ch.pipeline().addAfter(
-        "via-encoder",
+        Via.getManager().getInjector().getEncoderName(),
         "success-skipper",
         LoginSuccessSkipper.INSTANCE
       );

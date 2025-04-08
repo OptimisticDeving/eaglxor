@@ -1,9 +1,11 @@
 package dev.optimistic.eaglxor.pipeline;
 
+import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.bukkit.handlers.BukkitEncodeHandler;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.HandlerNames;
 import net.minecraft.network.VarInt;
 import net.minecraft.network.codec.StreamCodec;
 
@@ -36,7 +38,13 @@ public final class PipelineUtil {
     T packet,
     StreamCodec<? super FriendlyByteBuf, T> codec
   ) {
-    forwardToBeforeHandler(ctx, id, packet, codec, "splitter");
+    forwardToBeforeHandler(
+      ctx,
+      id,
+      packet,
+      codec,
+      HandlerNames.SPLITTER
+    );
   }
 
 
@@ -46,7 +54,13 @@ public final class PipelineUtil {
     T packet,
     StreamCodec<? super FriendlyByteBuf, T> codec
   ) {
-    forwardToBeforeHandler(ctx, id, packet, codec, "via-decoder");
+    forwardToBeforeHandler(
+      ctx,
+      id,
+      packet,
+      codec,
+      Via.getManager().getInjector().getDecoderName()
+    );
   }
 
   public static UserConnection getVia(ChannelHandlerContext ctx) {
