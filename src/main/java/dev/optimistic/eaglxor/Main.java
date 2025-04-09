@@ -141,10 +141,13 @@ public final class Main extends JavaPlugin {
       EpollServerSocketChannel.class
       :
       NioServerSocketChannel.class;
-    final EventLoopGroup eventLoopGroup = epoll ?
-      new EpollEventLoopGroup()
+    final Supplier<EventLoopGroup> groupFactory = epoll ?
+      EpollEventLoopGroup::new
       :
-      new NioEventLoopGroup();
+      NioEventLoopGroup::new;
+
+    final EventLoopGroup parentGroup = groupFactory.get();
+    final EventLoopGroup childGroup = groupFactory.get();
 
     final Initializer initializer = new Initializer();
 
@@ -158,7 +161,7 @@ public final class Main extends JavaPlugin {
     }
 
     new ServerBootstrap()
-      .group(eventLoopGroup)
+      .group(parentGroup, childGroup)
       .channel(serverChannel)
       .handler(new LoggingHandler(LogLevel.INFO))
       .childHandler(initializer)
