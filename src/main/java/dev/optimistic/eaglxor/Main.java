@@ -193,7 +193,10 @@ public final class Main extends JavaPlugin {
           true
         )
       );
-      ch.pipeline().addFirst(new WebSocketServerCompressionHandler());
+
+      if (getConfig().getBoolean("enable-ws-compression"))
+        ch.pipeline().addFirst(new WebSocketServerCompressionHandler());
+
       ch.pipeline().addFirst(ExceptionIgnorer.INSTANCE);
       ch.pipeline().addFirst(new HttpObjectAggregator(65535));
       ch.pipeline().addFirst(new HttpServerCodec());
