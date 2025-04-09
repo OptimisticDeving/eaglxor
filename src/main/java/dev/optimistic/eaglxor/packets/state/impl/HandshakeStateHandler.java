@@ -32,8 +32,8 @@ public final class HandshakeStateHandler implements StateHandler {
           packet.protocolVersion(),
           packet.minecraftVersion()
         ),
-        "Eaglxor",
-        Main.INSTANCE_SUPPLIER.get().getPluginMeta().getVersion(),
+        Main.NAME,
+        Main.INSTANCE_SUPPLIER.get().getBrandVersion(),
         false,
         Unpooled.EMPTY_BUFFER
       )

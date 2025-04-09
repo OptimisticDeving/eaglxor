@@ -1,5 +1,6 @@
 package dev.optimistic.eaglxor.packets.state.impl;
 
+import dev.optimistic.eaglxor.Main;
 import dev.optimistic.eaglxor.packets.clientbound.login.ClientboundLoginFinishPacket;
 import dev.optimistic.eaglxor.packets.clientbound.login.ClientboundLoginStartPacket;
 import dev.optimistic.eaglxor.packets.minecraft.ServerboundHelloPacket;
@@ -53,7 +54,7 @@ public final class LoginStateHandler implements StateHandler {
     ctx.writeAndFlush(ClientboundLoginFinishPacket.INSTANCE)
       .syncUninterruptibly();
 
-    PipelineUtil.finish(ctx);
+    PipelineUtil.remove(ctx);
 
     final int protocolVersion = EaglerAttrs.GAME_VERSION.getValue(ctx);
     PipelineUtil.forwardToVia(
@@ -61,7 +62,7 @@ public final class LoginStateHandler implements StateHandler {
       0x00,
       new ClientIntentionPacket(
         protocolVersion,
-        "Eaglxor",
+        Main.NAME,
         25565,
         ClientIntent.LOGIN
       ),

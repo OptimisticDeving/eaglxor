@@ -1,5 +1,6 @@
 package dev.optimistic.eaglxor.pipeline;
 
+import dev.optimistic.eaglxor.Main;
 import dev.optimistic.eaglxor.packets.state.StateHandler;
 import dev.optimistic.eaglxor.packets.state.impl.HandshakeStateHandler;
 import dev.optimistic.eaglxor.types.ProtocolVersion;
@@ -41,10 +42,6 @@ public final class EaglerAttrs {
 
   }
 
-  private static <T> AttributeKey<T> newKey(String name) {
-    return AttributeKey.newInstance("eaglxor:" + name);
-  }
-
   public static final class EaglerAttribute<T> {
     private final AttributeKey<T> attributeKey;
     private final @Nullable T theDefault;
@@ -53,7 +50,9 @@ public final class EaglerAttrs {
       String name,
       @Nullable T theDefault
     ) {
-      this.attributeKey = AttributeKey.newInstance("eaglxor:" + name);
+      this.attributeKey = AttributeKey.newInstance(
+        Main.NAME + ":" + name
+      );
       this.theDefault = theDefault;
     }
 
