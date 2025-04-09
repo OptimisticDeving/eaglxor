@@ -17,6 +17,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import net.minecraft.network.HandlerNames;
@@ -126,9 +127,12 @@ public final class Main extends JavaPlugin {
       ch.pipeline().addFirst(SimpleWebsocketCodec.INSTANCE);
       ch.pipeline().addFirst(
         new WebSocketServerProtocolHandler(
-          acceptPath
+          acceptPath,
+          null,
+          true
         )
       );
+      ch.pipeline().addFirst(new WebSocketServerCompressionHandler());
       ch.pipeline().addFirst(ExceptionIgnorer.INSTANCE);
       ch.pipeline().addFirst(new HttpObjectAggregator(65535));
       ch.pipeline().addFirst(new HttpServerCodec());
