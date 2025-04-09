@@ -14,7 +14,6 @@ import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.logging.LogLevel;
@@ -130,7 +129,6 @@ public final class Main extends JavaPlugin {
         )
       );
       ch.pipeline().addFirst(ExceptionIgnorer.INSTANCE);
-      ch.pipeline().addFirst(new HttpObjectAggregator(65535));
       ch.pipeline().addFirst(new HttpServerCodec());
       ch.pipeline().replace(
         HandlerNames.PREPENDER,
