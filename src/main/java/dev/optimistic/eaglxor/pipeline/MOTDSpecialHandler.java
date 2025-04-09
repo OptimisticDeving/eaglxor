@@ -21,9 +21,11 @@ public final class MOTDSpecialHandler extends ChannelInboundHandlerAdapter {
   }
 
   @Override
-  public void channelRead(ChannelHandlerContext ctx, Object msg) {
+  public void channelRead(ChannelHandlerContext ctx, Object msg)
+    throws Exception {
     if (!(msg instanceof TextWebSocketFrame textWebSocketFrame)) {
       ctx.pipeline().remove(this);
+      super.channelRead(ctx, msg);
       return;
     }
 
