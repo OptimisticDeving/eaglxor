@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
+import java.net.InetSocketAddress;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -161,7 +162,11 @@ public final class Main extends JavaPlugin {
       .channel(serverChannel)
       .handler(new LoggingHandler(LogLevel.INFO))
       .childHandler(initializer)
-      .bind(getConfig().getInt("bind-port", 42069));
+      .bind(InetSocketAddress.createUnresolved(
+          getConfig().getString("bind-addr", "0.0.0.0"),
+          getConfig().getInt("bind-port", 42069)
+        )
+      );
   }
 
   private final class Initializer

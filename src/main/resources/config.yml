@@ -1,3 +1,4 @@
 bind-port: 42069
+bind-addr: 0.0.0.0
 accept-path: /socket
 enable-ws-compression: true
