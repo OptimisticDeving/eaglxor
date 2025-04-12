@@ -162,7 +162,7 @@ public final class Main extends JavaPlugin {
       .channel(serverChannel)
       .handler(new LoggingHandler(LogLevel.INFO))
       .childHandler(initializer)
-      .bind(InetSocketAddress.createUnresolved(
+      .bind(new InetSocketAddress(
           getConfig().getString("bind-addr", "0.0.0.0"),
           getConfig().getInt("bind-port", 42069)
         )
